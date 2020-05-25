@@ -6,6 +6,7 @@
 
 import random
 
+# 50个州以及州府
 capitals = {'Alabama': 'Montgomery', 'Alaska': 'Juneau', 'Arizona': 'Phoenix',
             'Arkansas': 'Little Rock', 'California': 'Sacramento', 'Colorado': 'Denver',
             'Connecticut': 'Hartford', 'Delaware': 'Dover', 'Florida': 'Tallahassee',
@@ -24,27 +25,29 @@ capitals = {'Alabama': 'Montgomery', 'Alaska': 'Juneau', 'Arizona': 'Phoenix',
             'Virginia': 'Richmond', 'Washington': 'Olympia', 'WestVirginia': 'Charleston',
             'Wisconsin': 'Madison', 'Wyoming': 'Cheyenne'}
 
+# 创建35份试卷
 for quiz_num in range(35):
-    quiz_file = open(f'capitals{quiz_num+1}.txt', 'w')
-    answer_key_file = open(f'capitals_answer{quiz_num+1}.txt', 'w')
+    quiz_file = open(f'capitals{quiz_num+1}.txt', 'w')                       # 试卷文件
+    answer_key_file = open(f'capitals_answer{quiz_num+1}.txt', 'w')          # 答案文件
 
-    quiz_file.write('Name:\n\nDate:\n\nPeriod:\n\n')
+    quiz_file.write('Name:\n\nDate:\n\nPeriod:\n\n')                         # 名字，日期，班级栏
     quiz_file.write((' '*20) + f'State Capitals Quiz{quiz_num+1}')
     quiz_file.write('\n\n')
 
-    states = list(capitals.keys())
+    states = list(capitals.keys())                                           # 随机排序
     random.shuffle(states)
 
-    for question_num in range(50):
-        correct_answer = capitals[states[question_num]]
-        wrong_answer = list(capitals.values())
-        del wrong_answer[wrong_answer.index(correct_answer)]
-        wrong_answer = random.sample(wrong_answer, 3)
+    for question_num in range(50):                                           # 写入50个问题
+        correct_answer = capitals[states[question_num]]                      # 正确答案
+        wrong_answer = list(capitals.values())                               # 先获取所有的值（州府）
+        del wrong_answer[wrong_answer.index(correct_answer)]                 # 删除正确答案
+        wrong_answer = random.sample(wrong_answer, 3)                        # 在错误答案中随机选择3个唯一值
 
-        answer = wrong_answer + [correct_answer]
+        answer = wrong_answer + [correct_answer]                             # 组合答案并随机排序
         random.shuffle(answer)
 
-        quiz_file.write('%s. What is the capital of %s?\n' % (question_num + 1, states[question_num]))
+        quiz_file.write(f'{question_num + 1}. What is the capital of '
+                        f'{states[question_num]}?\n')
         for i in range(4):
             quiz_file.write(' %s. %s\n' % ('ABCD'[i], answer[i]))
         quiz_file.write('\n')
